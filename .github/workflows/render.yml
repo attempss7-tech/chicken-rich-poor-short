@@ -1,0 +1,55 @@
+name: render
+
+on:
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shard: 0
+            dir: shardA
+            start: 0
+            end: 1139
+          - shard: 1
+            dir: shardB
+            start: 1140
+            end: 2279
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm install --no-save playwright@1.49.1
+      - run: npx playwright install --with-deps chromium
+      - name: Set CHROME_PATH to installed Chromium
+        run: |
+          ls ~/.cache/ms-playwright/
+          if [ -x "$HOME/.cache/ms-playwright/chromium_headless_shell-1148/chrome-linux/headless_shell" ]; then
+            echo "CHROME_PATH=$HOME/.cache/ms-playwright/chromium_headless_shell-1148/chrome-linux/headless_shell" >> $GITHUB_ENV
+          else
+            echo "CHROME_PATH=$(ls -d $HOME/.cache/ms-playwright/chromium-*/chrome-linux/chrome | head -1)" >> $GITHUB_ENV
+          fi
+          echo "CHROME_PATH=$CHROME_PATH"
+          ls -la "$CHROME_PATH"
+      - name: Ensure ffmpeg (static build, never apt)
+        run: |
+          if command -v ffmpeg >/dev/null; then ffmpeg -version | head -1; exit 0; fi
+          curl -sL -o /tmp/ffmpeg.tar.xz https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
+          tar -xf /tmp/ffmpeg.tar.xz -C /tmp
+          sudo ln -sf /tmp/ffmpeg-*-amd64-static/ffmpeg /usr/local/bin/ffmpeg
+          ffmpeg -version | head -1
+      - name: Render shard
+        run: node scripts/render_range.mjs out/chicken/${{ matrix.dir }} ${{ matrix.start }} ${{ matrix.end }} 1.3333
+        env:
+          GL: swiftshader
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seg-${{ matrix.shard }}
+          path: out/chicken/${{ matrix.dir }}

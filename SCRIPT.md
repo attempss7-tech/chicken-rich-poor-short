@@ -1,0 +1,7 @@
+# "Why do the rich keep getting richer while the poor get poorer? One chicken explains it."
+User-supplied script, verbatim (2026-11-10). Parable / thought experiment, not a factual history claim.
+
+Why do the rich keep getting richer while the poor get poorer? One chicken explains it. One day, God takes away everyone's wealth. Every coin, every house, every field. Gone. Everyone is poor. Everyone is hungry. Three days later, he gives each person one chicken.
+The first group is so hungry, they cook their chicken that same night. Best dinner in three days. Last dinner, too. The second group is just as hungry, but they keep their chickens alive. If it's a hen, they eat her eggs. If it's a rooster, they keep him for breeding.
+The third group has a different idea. They go to the second group and say, let's put our hens and roosters together and we'll give you some of the eggs. You see? The second group wanted eggs. The third group wanted chickens. Three weeks later, the first chicks hatch. A few months after that, those chicks are laying eggs of their own. Over time, the third group raises more and more chickens.
+Meanwhile, the first group has nothing left to eat. So they do the only thing they can do—they complain. The second group has enough eggs to get by and lives comfortably. But the third group now has so many chickens, they can't look after them all. So they go to the first group and offer them work paid in eggs. And just like that, a world where everyone started with the exact same chicken has split into the poor, the middle class, and the rich.
