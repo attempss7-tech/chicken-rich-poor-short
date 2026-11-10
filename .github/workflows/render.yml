@@ -30,11 +30,13 @@ jobs:
       - name: Set CHROME_PATH to installed Chromium
         run: |
           ls ~/.cache/ms-playwright/
-          if [ -x "$HOME/.cache/ms-playwright/chromium_headless_shell-1148/chrome-linux/headless_shell" ]; then
-            echo "CHROME_PATH=$HOME/.cache/ms-playwright/chromium_headless_shell-1148/chrome-linux/headless_shell" >> $GITHUB_ENV
+          HS="$HOME/.cache/ms-playwright/chromium_headless_shell-1148/chrome-linux/headless_shell"
+          if [ -x "$HS" ]; then
+            CHROME_PATH="$HS"
           else
-            echo "CHROME_PATH=$(ls -d $HOME/.cache/ms-playwright/chromium-*/chrome-linux/chrome | head -1)" >> $GITHUB_ENV
+            CHROME_PATH="$(ls -d $HOME/.cache/ms-playwright/chromium-*/chrome-linux/chrome | head -1)"
           fi
+          echo "CHROME_PATH=$CHROME_PATH" >> $GITHUB_ENV
           echo "CHROME_PATH=$CHROME_PATH"
           ls -la "$CHROME_PATH"
       - name: Ensure ffmpeg (static build, never apt)
